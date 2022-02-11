@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class PlayerMovementControl : MonoBehaviour
 {
     [Header("Player Control")]
@@ -53,6 +54,7 @@ public class PlayerMovementControl : MonoBehaviour
 
     private void PlayerMovement()
     {
+        //bool isGrounded = Collision.
         rb2D.velocity = new Vector2(move * moveSpeed, rb2D.velocity.y);
         animator.SetFloat("Blend", Mathf.Abs(move));
     }
