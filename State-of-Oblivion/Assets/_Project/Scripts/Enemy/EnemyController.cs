@@ -8,10 +8,12 @@ public class EnemyController : MonoBehaviour
     private const string LEFT = "left";
     private const string RIGHT = "right";
     [SerializeField] private Transform playerGameObject;
+    [SerializeField] private GameObject enemyGameObject;
 
     [Header("Stats")]
     [Range(1f, 10f)] [Tooltip("Define the Moving speed of the Enemy")] [SerializeField] private float enemySpeed;
     [Range(1f, 10f)] [Tooltip("Define the Range between Enemy and Player")] [SerializeField] private float agroRange;
+    [SerializeField] private int enemyAttackValue = 5;
     [SerializeField] private float baseCastDist;
     [SerializeField] private Transform castPos;
     [SerializeField] private LayerMask wallLayerMask,groundLayerMask;
@@ -55,7 +57,7 @@ public class EnemyController : MonoBehaviour
     }
     private void EnemyChasePlayer()
     {
-        float chaseSpeed = enemySpeed * 2f;
+        float chaseSpeed = enemySpeed * 1.8f;
         if (transform.position.x < playerGameObject.position.x)
         {
             rb.velocity = new Vector2(chaseSpeed, rb.velocity.y);
@@ -152,5 +154,14 @@ public class EnemyController : MonoBehaviour
             isNearEdge = true;
         }
         return isNearEdge;
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+
+        PlayerMovementControl.instance = collision.gameObject.GetComponent<PlayerMovementControl>();
+        if (PlayerMovementControl.Instance != null)
+        {
+            PlayerMovementControl.Instance.PlayerTakeDamage(enemyAttackValue);
+        }
     }
 }
