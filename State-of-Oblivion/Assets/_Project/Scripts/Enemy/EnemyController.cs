@@ -27,6 +27,7 @@ public class EnemyController : MonoBehaviour
     private Vector2 baseScale;
     private string facingDirection;
     public bool IsFacingLeft { get; set; }
+    [SerializeField] private EnemyHealthController enemyHealthController;
 
     public static EnemyController instance;
     public static EnemyController Instance { get { return instance; } }
@@ -60,7 +61,9 @@ public class EnemyController : MonoBehaviour
         IsFacingLeft = false;
         enemyHealthBar.SetActive(false);
         enemyCurrentHealth = enemyMaxHealth;
-        EnemyHealthController.Instance.SetMaxHealth(enemyMaxHealth);
+        enemyHealthController.GetComponent<EnemyHealthController>().SetMaxHealth(enemyCurrentHealth);
+
+        //EnemyHealthController.Instance.SetMaxHealth(enemyMaxHealth);
     }
 
     private void EnemyMovement()
@@ -191,9 +194,9 @@ public class EnemyController : MonoBehaviour
     internal void EnemyTakeDamage(int damage)
     {
         enemyCurrentHealth -= damage;
-        EnemyHealthController.Instance.SetHealth(enemyCurrentHealth);
+        enemyHealthController.GetComponent<EnemyHealthController>().SetHealth(enemyCurrentHealth);
 
-        if (enemyCurrentHealth < 0)
+        if (enemyCurrentHealth <= 0)
         {
             enemyCurrentHealth = 0;
             EnemyDie();

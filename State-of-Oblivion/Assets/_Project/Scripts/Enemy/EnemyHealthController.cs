@@ -8,20 +8,20 @@ public class EnemyHealthController : MonoBehaviour
 {
     [SerializeField] private Slider slider;
 
-    private static EnemyHealthController instance;
-    internal static EnemyHealthController Instance { get { return instance; } }
+    //private static EnemyHealthController instance;
+    //internal static EnemyHealthController Instance { get { return instance; } }
 
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-        }
-    }
+    //private void Awake()
+    //{
+    //    if (instance != null)
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //    else
+    //    {
+    //        instance = this;
+    //    }
+    //}
     internal void SetMaxHealth(int health)
     {
         slider.maxValue = health;
