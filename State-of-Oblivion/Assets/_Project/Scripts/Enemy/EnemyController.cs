@@ -61,7 +61,6 @@ public class EnemyController : MonoBehaviour
         enemyHealthBar.SetActive(false);
         enemyCurrentHealth = enemyMaxHealth;
         EnemyHealthController.Instance.SetMaxHealth(enemyMaxHealth);
-
     }
 
     private void EnemyMovement()
@@ -182,7 +181,6 @@ public class EnemyController : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
         PlayerMovementControl.instance = collision.gameObject.GetComponent<PlayerMovementControl>();
         if (PlayerMovementControl.Instance != null)
         {
