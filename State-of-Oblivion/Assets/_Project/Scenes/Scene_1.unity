@@ -289,7 +289,7 @@ GameObject:
   - component: {fileID: 146940416}
   - component: {fileID: 146940415}
   m_Layer: 5
-  m_Name: Canvas_Player
+  m_Name: Canvas_Player_Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -806,11 +806,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 612776100}
---- !u!4 &990579899 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4126615443512121800, guid: dd6ce6ec4deb79f4390653bf70b1758d, type: 3}
-  m_PrefabInstance: {fileID: 4126615442834570550}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1032468703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1219,11 +1214,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1946188103 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8201183756753866819, guid: dd6ce6ec4deb79f4390653bf70b1758d, type: 3}
-  m_PrefabInstance: {fileID: 4126615442834570550}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2123156308
 GameObject:
   m_ObjectHideFlags: 0
@@ -1333,11 +1323,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2132305306 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4126615444097245597, guid: dd6ce6ec4deb79f4390653bf70b1758d, type: 3}
-  m_PrefabInstance: {fileID: 4126615442834570550}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4126615442834570550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1394,41 +1379,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4126615444070283259, guid: dd6ce6ec4deb79f4390653bf70b1758d, type: 3}
-      propertyPath: castPos
-      value: 
-      objectReference: {fileID: 990579899}
-    - target: {fileID: 4126615444070283259, guid: dd6ce6ec4deb79f4390653bf70b1758d, type: 3}
-      propertyPath: agroRange
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4126615444070283259, guid: dd6ce6ec4deb79f4390653bf70b1758d, type: 3}
-      propertyPath: enemySpeed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4126615444070283259, guid: dd6ce6ec4deb79f4390653bf70b1758d, type: 3}
-      propertyPath: baseCastDist
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4126615444070283259, guid: dd6ce6ec4deb79f4390653bf70b1758d, type: 3}
-      propertyPath: enemyHealthBar
-      value: 
-      objectReference: {fileID: 1946188103}
-    - target: {fileID: 4126615444070283259, guid: dd6ce6ec4deb79f4390653bf70b1758d, type: 3}
-      propertyPath: enemyGameObject
-      value: 
-      objectReference: {fileID: 2132305306}
-    - target: {fileID: 4126615444070283259, guid: dd6ce6ec4deb79f4390653bf70b1758d, type: 3}
       propertyPath: playerGameObject
       value: 
       objectReference: {fileID: 553847490}
-    - target: {fileID: 4126615444070283259, guid: dd6ce6ec4deb79f4390653bf70b1758d, type: 3}
-      propertyPath: wallLayerMask.m_Bits
-      value: 320
-      objectReference: {fileID: 0}
-    - target: {fileID: 4126615444070283259, guid: dd6ce6ec4deb79f4390653bf70b1758d, type: 3}
-      propertyPath: groundLayerMask.m_Bits
-      value: 128
-      objectReference: {fileID: 0}
     - target: {fileID: 4126615444070283261, guid: dd6ce6ec4deb79f4390653bf70b1758d, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -1440,10 +1393,6 @@ PrefabInstance:
     - target: {fileID: 8201183756014910792, guid: dd6ce6ec4deb79f4390653bf70b1758d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8201183756843862099, guid: dd6ce6ec4deb79f4390653bf70b1758d, type: 3}
-      propertyPath: m_Value
-      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6ce6ec4deb79f4390653bf70b1758d, type: 3}
@@ -1501,6 +1450,10 @@ PrefabInstance:
     - target: {fileID: 4895380956846281018, guid: b8a0d1573447f38479776393ac4eb8cf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4895380956846281021, guid: b8a0d1573447f38479776393ac4eb8cf, type: 3}
+      propertyPath: playerAttackableLayers.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8a0d1573447f38479776393ac4eb8cf, type: 3}

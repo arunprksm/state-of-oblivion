@@ -204,5 +204,6 @@ public class EnemyController : MonoBehaviour
     private void EnemyDie()
     {
         Debug.Log("Enemy Died");
+        Destroy(gameObject);
     }
 }

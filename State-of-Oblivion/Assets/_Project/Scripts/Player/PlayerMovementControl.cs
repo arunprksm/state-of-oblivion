@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +24,7 @@ public class PlayerMovementControl : MonoBehaviour
     [SerializeField] private int playerMaxHealth = 100;
     [SerializeField] private int playerCurrentHealth;
 
-    [SerializeField] private int playerAttackValue = 10;
+    [SerializeField] private int playerAttackValue = 20;
 
     private bool jump, attack;
     private bool isGrounded;
@@ -164,5 +165,14 @@ public class PlayerMovementControl : MonoBehaviour
     {
         playerCurrentHealth -= damage;
         PlayerHealthController.Instance.SetHealth(playerCurrentHealth);
+        if (playerCurrentHealth < 0)
+        {
+            playerCurrentHealth = 0;
+            PlayerDie();
+        }
+    }
+    private void PlayerDie()
+    {
+        Debug.Log("Player Died");
     }
 }
