@@ -57,7 +57,7 @@ public class PlayerMovementControl : MonoBehaviour
         rb2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         playerCurrentHealth = playerMaxHealth;
-        HealthController.Instance.SetMaxHealth(playerMaxHealth);
+        PlayerHealthController.Instance.SetMaxHealth(playerMaxHealth);
     }
     private void Update()
     {
@@ -163,6 +163,6 @@ public class PlayerMovementControl : MonoBehaviour
     internal void PlayerTakeDamage(int damage)
     {
         playerCurrentHealth -= damage;
-        HealthController.Instance.SetHealth(playerCurrentHealth);
+        PlayerHealthController.Instance.SetHealth(playerCurrentHealth);
     }
 }

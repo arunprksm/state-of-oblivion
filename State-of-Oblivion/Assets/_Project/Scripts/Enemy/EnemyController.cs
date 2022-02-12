@@ -60,7 +60,7 @@ public class EnemyController : MonoBehaviour
         IsFacingLeft = false;
         enemyHealthBar.SetActive(false);
         enemyCurrentHealth = enemyMaxHealth;
-        HealthController.Instance.SetMaxHealth(enemyMaxHealth);
+        EnemyHealthController.Instance.SetMaxHealth(enemyMaxHealth);
 
     }
 
@@ -193,7 +193,7 @@ public class EnemyController : MonoBehaviour
     internal void EnemyTakeDamage(int damage)
     {
         enemyCurrentHealth -= damage;
-        HealthController.Instance.SetHealth(enemyCurrentHealth);
+        EnemyHealthController.Instance.SetHealth(enemyCurrentHealth);
 
         if (enemyCurrentHealth < 0)
         {
