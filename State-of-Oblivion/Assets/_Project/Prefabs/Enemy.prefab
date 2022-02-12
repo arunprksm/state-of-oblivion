@@ -158,9 +158,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerGameObject: {fileID: 0}
   enemyGameObject: {fileID: 4126615444097245597}
+  enemyHealthBar: {fileID: 8201183756843862102}
   enemySpeed: 3
   agroRange: 5
-  enemyAttackValue: 5
   baseCastDist: 0.5
   castPos: {fileID: 4126615443512121800}
   wallLayerMask:
@@ -169,6 +169,9 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 128
+  enemyAttackValue: 5
+  enemyMaxHealth: 50
+  enemyCurrentHealth: 0
 --- !u!1 &4126615444097245597
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,9 +311,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerGameObject: {fileID: 0}
   enemyGameObject: {fileID: 0}
+  enemyHealthBar: {fileID: 0}
   enemySpeed: 3
   agroRange: 5
-  enemyAttackValue: 5
   baseCastDist: 0.5
   castPos: {fileID: 4126615443512121800}
   wallLayerMask:
@@ -319,6 +322,9 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 128
+  enemyAttackValue: 5
+  enemyMaxHealth: 50
+  enemyCurrentHealth: 0
 --- !u!1 &8201183756014910793
 GameObject:
   m_ObjectHideFlags: 0

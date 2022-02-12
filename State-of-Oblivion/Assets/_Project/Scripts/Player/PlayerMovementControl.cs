@@ -23,6 +23,8 @@ public class PlayerMovementControl : MonoBehaviour
     [SerializeField] private int playerMaxHealth = 100;
     [SerializeField] private int playerCurrentHealth;
 
+    [SerializeField] private int playerAttackValue = 10;
+
     private bool jump, attack;
     private bool isGrounded;
 
@@ -144,6 +146,7 @@ public class PlayerMovementControl : MonoBehaviour
         foreach (Collider2D enemy in hitEnemies)
         {
             Debug.Log("we Hit" + enemy.name);
+            enemy.GetComponent<EnemyController>().EnemyTakeDamage(playerAttackValue);
         }
     }
 
