@@ -22,7 +22,7 @@ public class PlayerMovementControl : MonoBehaviour
     [SerializeField] private LayerMask playerAttackableLayers;
     
     [SerializeField] private int playerMaxHealth = 100;
-    [SerializeField] private int playerCurrentHealth;
+    [SerializeField] internal int playerCurrentHealth;
 
     [SerializeField] private int playerAttackValue = 20;
 
@@ -54,7 +54,8 @@ public class PlayerMovementControl : MonoBehaviour
 
     private void InitializeComponenet()
     {
-        //Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         rb2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         playerCurrentHealth = playerMaxHealth;
@@ -146,7 +147,7 @@ public class PlayerMovementControl : MonoBehaviour
 
         foreach (Collider2D enemy in hitEnemies)
         {
-            Debug.Log("we Hit" + enemy.name);
+            //Debug.Log("we Hit" + enemy.name);
             enemy.GetComponent<EnemyController>().EnemyTakeDamage(playerAttackValue);
         }
     }

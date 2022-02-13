@@ -28,7 +28,7 @@ public class EnemyController : MonoBehaviour
     private string facingDirection;
     public bool IsFacingLeft { get; set; }
     [SerializeField] private EnemyHealthController enemyHealthController;
-
+    [SerializeField] private ScoreController scoreController;
     public static EnemyController instance;
     public static EnemyController Instance { get { return instance; } }
 
@@ -194,6 +194,8 @@ public class EnemyController : MonoBehaviour
     internal void EnemyTakeDamage(int damage)
     {
         enemyCurrentHealth -= damage;
+        scoreController.score += damage;
+
         enemyHealthController.GetComponent<EnemyHealthController>().SetHealth(enemyCurrentHealth);
 
         if (enemyCurrentHealth <= 0)
@@ -204,7 +206,7 @@ public class EnemyController : MonoBehaviour
     }
     private void EnemyDie()
     {
-        Debug.Log("Enemy Died");
+        //Debug.Log("Enemy Died");
         Destroy(gameObject);
     }
 }
