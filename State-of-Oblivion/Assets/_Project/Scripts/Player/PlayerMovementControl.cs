@@ -54,8 +54,7 @@ public class PlayerMovementControl : MonoBehaviour
 
     private void InitializeComponenet()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        
         rb2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         playerCurrentHealth = playerMaxHealth;
@@ -63,7 +62,11 @@ public class PlayerMovementControl : MonoBehaviour
     }
     private void Update()
     {
-        //Cursor.visible = false;
+        if (SceneController.IsGamePaused) //guard class
+        {
+            return;
+        }
+
         PlayerInput();
         PlayerMovement();
         PlayerFlip();

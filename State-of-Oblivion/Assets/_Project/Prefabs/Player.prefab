@@ -168,6 +168,9 @@ MonoBehaviour:
   playerAttackableLayers:
     serializedVersion: 2
     m_Bits: 256
+  playerMaxHealth: 100
+  playerCurrentHealth: 0
+  playerAttackValue: 10
 --- !u!1 &4895380957574745002
 GameObject:
   m_ObjectHideFlags: 0
