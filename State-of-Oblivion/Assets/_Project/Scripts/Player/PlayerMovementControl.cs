@@ -49,6 +49,7 @@ public class PlayerMovementControl : MonoBehaviour
     }
     private void Start()
     {
+        gameObject.SetActive(true);
         InitializeComponenet();
     }
 
@@ -169,6 +170,7 @@ public class PlayerMovementControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("DieLimit"))
         {
+            //FindObjectOfType<AudioManager>().PlayAudio("PlayerDeath");
             StartCoroutine(PlayerDie());
         }
     }
@@ -185,8 +187,12 @@ public class PlayerMovementControl : MonoBehaviour
     }
     private IEnumerator PlayerDie()
     {
-        yield return new WaitForSecondsRealtime(5);
+        //AudioManager.Instance.PlayAudio("PlayerDeath");
+        FindObjectOfType<AudioManager>().PlayAudio("PlayerDeath");
+        animator.SetBool("Die", true);
+        yield return new WaitForSecondsRealtime(2);
         Debug.Log("Player Died");
+        gameObject.SetActive(false);
     }
     internal void PlayerWin()
     {

@@ -8,6 +8,10 @@ public class MainMenuCameraMovement : MonoBehaviour
 {
     [SerializeField] private float mainCameraSpeed;
 
+    private void Start()
+    {
+        FindObjectOfType<AudioManager>().PlayAudio("GameMusic");
+    }
     private void Update()
     {
         transform.Translate(Vector2.right * Time.deltaTime * mainCameraSpeed);
