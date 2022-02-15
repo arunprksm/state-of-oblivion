@@ -11,6 +11,8 @@ public class SceneController : MonoBehaviour
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         pauseMenuPanel.SetActive(false);
     }
     private void Update()
