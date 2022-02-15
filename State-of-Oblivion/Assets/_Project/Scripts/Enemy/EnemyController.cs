@@ -7,23 +7,42 @@ public class EnemyController : MonoBehaviour
 {
     private const string LEFT = "left";
     private const string RIGHT = "right";
-    [SerializeField] private Transform playerGameObject;
-    [SerializeField] private GameObject enemyGameObject;
+    [SerializeField] [Tooltip("Define Player GameObject 'HERE'")] private Transform playerGameObject;
+    [SerializeField] [Tooltip("Define Enemy GameObject 'HERE'")] private GameObject enemyGameObject;
+    [SerializeField] [Tooltip("Define Enemy Health Bar GameObject 'HERE'")] private GameObject enemyHealthBar;
 
     [Header("Stats")]
     [Range(1f, 10f)] [Tooltip("Define the Moving speed of the Enemy")] [SerializeField] private float enemySpeed;
     [Range(1f, 10f)] [Tooltip("Define the Range between Enemy and Player")] [SerializeField] private float agroRange;
-    [SerializeField] private int enemyAttackValue = 5;
     [SerializeField] private float baseCastDist;
     [SerializeField] private Transform castPos;
-    [SerializeField] private LayerMask wallLayerMask,groundLayerMask;
+    [SerializeField] private LayerMask wallLayerMask, groundLayerMask;
 
+    [SerializeField] private int enemyAttackValue = 5;
+    [Header("Health")]
+    [SerializeField] private int enemyMaxHealth = 50;
+    [SerializeField] private int enemyCurrentHealth;
 
     private Rigidbody2D rb;
     private Vector2 baseScale;
     private string facingDirection;
     public bool IsFacingLeft { get; set; }
+    [SerializeField] private EnemyHealthController enemyHealthController;
 
+    public static EnemyController instance;
+    public static EnemyController Instance { get { return instance; } }
+
+    //private void Awake()
+    //{
+    //    if (instance != null)
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //    else
+    //    {
+    //        instance = this;
+    //    }
+    //}
     private void Start()
     {
         InitializeComponents();
@@ -37,9 +56,14 @@ public class EnemyController : MonoBehaviour
     private void InitializeComponents()
     {
         rb = GetComponent<Rigidbody2D>();
-        baseScale = transform.localScale;
+        baseScale = enemyGameObject.transform.localScale;
         facingDirection = RIGHT;
         IsFacingLeft = false;
+        enemyHealthBar.SetActive(false);
+        enemyCurrentHealth = enemyMaxHealth;
+        enemyHealthController.GetComponent<EnemyHealthController>().SetMaxHealth(enemyCurrentHealth);
+
+        //EnemyHealthController.Instance.SetMaxHealth(enemyMaxHealth);
     }
 
     private void EnemyMovement()
@@ -49,10 +73,13 @@ public class EnemyController : MonoBehaviour
         if (distToPlayer < agroRange)
         {
             EnemyChasePlayer();
+            enemyHealthBar.SetActive(true);
         }
         else
         {
             EnemyPatrol();
+            enemyHealthBar.SetActive(false);
+
         }
     }
     private void EnemyChasePlayer()
@@ -83,7 +110,7 @@ public class EnemyController : MonoBehaviour
         {
             newScale.x = baseScale.x;
         }
-        transform.localScale = newScale;
+        enemyGameObject.transform.localScale = newScale;
         facingDirection = newDirection;
     }
 
@@ -157,11 +184,27 @@ public class EnemyController : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
         PlayerMovementControl.instance = collision.gameObject.GetComponent<PlayerMovementControl>();
         if (PlayerMovementControl.Instance != null)
         {
             PlayerMovementControl.Instance.PlayerTakeDamage(enemyAttackValue);
         }
+    }
+
+    internal void EnemyTakeDamage(int damage)
+    {
+        enemyCurrentHealth -= damage;
+        enemyHealthController.GetComponent<EnemyHealthController>().SetHealth(enemyCurrentHealth);
+
+        if (enemyCurrentHealth <= 0)
+        {
+            enemyCurrentHealth = 0;
+            EnemyDie();
+        }
+    }
+    private void EnemyDie()
+    {
+        Debug.Log("Enemy Died");
+        Destroy(gameObject);
     }
 }

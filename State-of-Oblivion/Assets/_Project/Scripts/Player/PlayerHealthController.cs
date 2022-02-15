@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class HealthController : MonoBehaviour
+public class PlayerHealthController : MonoBehaviour
 {
     [SerializeField] private Slider slider;
 
-    private static HealthController instance;
-    internal static HealthController Instance { get { return instance; } }
+    private static PlayerHealthController instance;
+    internal static PlayerHealthController Instance { get { return instance; } }
 
     private void Awake()
     {

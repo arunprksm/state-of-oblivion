@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,8 @@ public class PlayerMovementControl : MonoBehaviour
     
     [SerializeField] private int playerMaxHealth = 100;
     [SerializeField] private int playerCurrentHealth;
+
+    [SerializeField] private int playerAttackValue = 20;
 
     private bool jump, attack;
     private bool isGrounded;
@@ -55,7 +58,7 @@ public class PlayerMovementControl : MonoBehaviour
         rb2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         playerCurrentHealth = playerMaxHealth;
-        HealthController.Instance.SetMaxHealth(playerMaxHealth);
+        PlayerHealthController.Instance.SetMaxHealth(playerMaxHealth);
     }
     private void Update()
     {
@@ -144,6 +147,7 @@ public class PlayerMovementControl : MonoBehaviour
         foreach (Collider2D enemy in hitEnemies)
         {
             Debug.Log("we Hit" + enemy.name);
+            enemy.GetComponent<EnemyController>().EnemyTakeDamage(playerAttackValue);
         }
     }
 
@@ -160,6 +164,15 @@ public class PlayerMovementControl : MonoBehaviour
     internal void PlayerTakeDamage(int damage)
     {
         playerCurrentHealth -= damage;
-        HealthController.Instance.SetHealth(playerCurrentHealth);
+        PlayerHealthController.Instance.SetHealth(playerCurrentHealth);
+        if (playerCurrentHealth < 0)
+        {
+            playerCurrentHealth = 0;
+            PlayerDie();
+        }
+    }
+    private void PlayerDie()
+    {
+        Debug.Log("Player Died");
     }
 }
