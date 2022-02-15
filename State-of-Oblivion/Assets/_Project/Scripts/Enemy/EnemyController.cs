@@ -189,6 +189,12 @@ public class EnemyController : MonoBehaviour
         {
             PlayerMovementControl.Instance.PlayerTakeDamage(enemyAttackValue);
         }
+
+        if (collision.gameObject.CompareTag("DieLimit"))
+        {
+            EnemyDie();
+            scoreController.score += enemyCurrentHealth;
+        }
     }
 
     internal void EnemyTakeDamage(int damage)
@@ -204,9 +210,12 @@ public class EnemyController : MonoBehaviour
             EnemyDie();
         }
     }
+
+
     private void EnemyDie()
     {
         //Debug.Log("Enemy Died");
         Destroy(gameObject);
     }
+
 }
