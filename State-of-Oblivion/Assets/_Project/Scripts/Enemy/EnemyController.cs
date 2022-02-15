@@ -7,12 +7,13 @@ public class EnemyController : MonoBehaviour
 {
     private const string LEFT = "left";
     private const string RIGHT = "right";
-    [Header("Player Game Object")]
     [SerializeField] private Transform playerGameObject;
+    [SerializeField] private GameObject enemyGameObject;
 
-    [Header("Enemy Control")]
-    [SerializeField] private float enemySpeed;
-    [SerializeField] private float agroRange;
+    [Header("Stats")]
+    [Range(1f, 10f)] [Tooltip("Define the Moving speed of the Enemy")] [SerializeField] private float enemySpeed;
+    [Range(1f, 10f)] [Tooltip("Define the Range between Enemy and Player")] [SerializeField] private float agroRange;
+    [SerializeField] private int enemyAttackValue = 5;
     [SerializeField] private float baseCastDist;
     [SerializeField] private Transform castPos;
     [SerializeField] private LayerMask wallLayerMask,groundLayerMask;
@@ -21,9 +22,7 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 baseScale;
     private string facingDirection;
-    private bool isFacingLeft;
-
-    //public bool IsFacingLeft { get => isFacingLeft; set => isFacingLeft = value; }
+    public bool IsFacingLeft { get; set; }
 
     private void Start()
     {
@@ -40,7 +39,7 @@ public class EnemyController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         baseScale = transform.localScale;
         facingDirection = RIGHT;
-        isFacingLeft = false;
+        IsFacingLeft = false;
     }
 
     private void EnemyMovement()
@@ -58,18 +57,18 @@ public class EnemyController : MonoBehaviour
     }
     private void EnemyChasePlayer()
     {
-        float chaseSpeed = enemySpeed * 3f;
+        float chaseSpeed = enemySpeed * 1.8f;
         if (transform.position.x < playerGameObject.position.x)
         {
             rb.velocity = new Vector2(chaseSpeed, rb.velocity.y);
             ChangeFacingDirection(RIGHT);
-            isFacingLeft = false;
+            IsFacingLeft = false;
         }
         else if (transform.position.x > playerGameObject.position.x)
         {
             rb.velocity = new Vector2(-chaseSpeed, rb.velocity.y);
             ChangeFacingDirection(LEFT);
-            isFacingLeft = true;
+            IsFacingLeft = true;
         }
     }
 
@@ -95,10 +94,6 @@ public class EnemyController : MonoBehaviour
         {
             vX = -enemySpeed;
         }
-        //else
-        //{
-        //    vX = enemySpeed;
-        //}
         if (IsHittingWall() || IsNearEdge())
         {
             if (facingDirection == LEFT)
@@ -143,7 +138,7 @@ public class EnemyController : MonoBehaviour
 
     private bool IsNearEdge()
     {
-        bool isNearEdge = false;
+        bool isNearEdge;
         float castDist = baseCastDist;
 
         Vector2 targetPos = castPos.position;
@@ -159,5 +154,14 @@ public class EnemyController : MonoBehaviour
             isNearEdge = true;
         }
         return isNearEdge;
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+
+        PlayerMovementControl.instance = collision.gameObject.GetComponent<PlayerMovementControl>();
+        if (PlayerMovementControl.Instance != null)
+        {
+            PlayerMovementControl.Instance.PlayerTakeDamage(enemyAttackValue);
+        }
     }
 }

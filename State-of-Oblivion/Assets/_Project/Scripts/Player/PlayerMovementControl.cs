@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 public class PlayerMovementControl : MonoBehaviour
 {
     [Header("Player Control")]
@@ -13,12 +14,14 @@ public class PlayerMovementControl : MonoBehaviour
     [SerializeField] private float feetCheckRadius;
 
     [SerializeField] private LayerMask whatGroundLayer;
-    
+
     [Header("Player Attack Check")]
     [SerializeField] private Transform attackPosition;
     [SerializeField] private float attackRange;
     [SerializeField] private LayerMask playerAttackableLayers;
-
+    
+    [SerializeField] private int playerMaxHealth = 100;
+    [SerializeField] private int playerCurrentHealth;
 
     private bool jump, attack;
     private bool isGrounded;
@@ -27,13 +30,33 @@ public class PlayerMovementControl : MonoBehaviour
     private Animator animator;
     private float move;
 
+    internal static PlayerMovementControl instance;
+    internal static PlayerMovementControl Instance { get { return instance; } }
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
     private void Start()
+    {
+        InitializeComponenet();
+    }
+
+    private void InitializeComponenet()
     {
         //Cursor.visible = false;
         rb2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        playerCurrentHealth = playerMaxHealth;
+        HealthController.Instance.SetMaxHealth(playerMaxHealth);
     }
-
     private void Update()
     {
         //Cursor.visible = false;
@@ -53,6 +76,7 @@ public class PlayerMovementControl : MonoBehaviour
 
     private void PlayerMovement()
     {
+        //bool isGrounded = Collision.
         rb2D.velocity = new Vector2(move * moveSpeed, rb2D.velocity.y);
         animator.SetFloat("Blend", Mathf.Abs(move));
     }
@@ -131,5 +155,11 @@ public class PlayerMovementControl : MonoBehaviour
         }
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPosition.position, attackRange);
+    }
+
+    internal void PlayerTakeDamage(int damage)
+    {
+        playerCurrentHealth -= damage;
+        HealthController.Instance.SetHealth(playerCurrentHealth);
     }
 }
