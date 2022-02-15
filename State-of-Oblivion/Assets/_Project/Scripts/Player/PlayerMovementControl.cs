@@ -162,6 +162,14 @@ public class PlayerMovementControl : MonoBehaviour
         Gizmos.DrawWireSphere(attackPosition.position, attackRange);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("DieLimit"))
+        {
+            StartCoroutine(PlayerDie());
+        }
+    }
+
     internal void PlayerTakeDamage(int damage)
     {
         playerCurrentHealth -= damage;
@@ -169,11 +177,16 @@ public class PlayerMovementControl : MonoBehaviour
         if (playerCurrentHealth < 0)
         {
             playerCurrentHealth = 0;
-            PlayerDie();
+            StartCoroutine(PlayerDie());
         }
     }
-    private void PlayerDie()
+    private IEnumerator PlayerDie()
     {
+        yield return new WaitForSecondsRealtime(5);
         Debug.Log("Player Died");
+    }
+    internal void PlayerWin()
+    {
+        Debug.Log("Player Win");
     }
 }
