@@ -2499,10 +2499,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9694b93099cfe02448ea080a6c356f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SFX: {fileID: 2076131801}
-  MusicPlay: {fileID: 1035392860}
-  musicVolume: 0
-  sfxVolume: 0
+  SFX: {fileID: 1035392860}
+  MusicPlay: {fileID: 2076131801}
+  musicVolume: 0.5
+  sfxVolume: 0.5
   Sounds:
   - soundType: 0
     audioClip: {fileID: 8300000, guid: 410492aef3b9d7e4790278d0f5a68e14, type: 3}

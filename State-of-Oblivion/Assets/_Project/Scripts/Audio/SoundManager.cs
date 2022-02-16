@@ -12,9 +12,9 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource SFX;
     [SerializeField] private AudioSource MusicPlay;
 
-    [Range(0f, 1f)] [SerializeField] private float musicVolume;
+    [Range(0f, 1f)] [SerializeField] private float musicVolume = 0.5f;
 
-    [Range(0f, 1f)] [SerializeField] private float sfxVolume;
+    [Range(0f, 1f)] [SerializeField] private float sfxVolume = 0.5f;
 
     [SerializeField] private SoundType[] Sounds;
 
