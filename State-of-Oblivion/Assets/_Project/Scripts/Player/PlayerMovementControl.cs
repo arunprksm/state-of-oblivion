@@ -60,14 +60,15 @@ public class PlayerMovementControl : MonoBehaviour
         animator = GetComponent<Animator>();
         playerCurrentHealth = playerMaxHealth;
         PlayerHealthController.Instance.SetMaxHealth(playerMaxHealth);
+        SoundManager.Instance.PlayMusic(Sounds.GameMusic_scene1);
     }
     private void Update()
     {
+
         if (SceneController.IsGamePaused) //guard class
         {
             return;
         }
-
         PlayerInput();
         PlayerMovement();
         PlayerFlip();
@@ -187,8 +188,9 @@ public class PlayerMovementControl : MonoBehaviour
     }
     private IEnumerator PlayerDie()
     {
-        //AudioManager.Instance.PlayAudio("PlayerDeath");
-        FindObjectOfType<AudioManager>().PlayAudio("PlayerDeath");
+        //AudioManager.Instance.PlayMusic("PlayerDeath");
+        //FindObjectOfType<AudioManager>().PlayMusic("PlayerDeath");
+        SoundManager.Instance.PlaySFX(Sounds.PlayerDeath);
         animator.SetBool("Die", true);
         yield return new WaitForSecondsRealtime(2);
         Debug.Log("Player Died");

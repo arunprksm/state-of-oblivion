@@ -10,7 +10,7 @@ public class MainMenuCameraMovement : MonoBehaviour
 
     private void Start()
     {
-        FindObjectOfType<AudioManager>().PlayAudio("GameMusic");
+        SoundManager.Instance.PlayMusic(Sounds.Music);
     }
     private void Update()
     {
@@ -18,6 +18,7 @@ public class MainMenuCameraMovement : MonoBehaviour
     }
     public void PlayButton()
     {
+        SoundManager.Instance.PlaySFX(Sounds.ButtonClick);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
