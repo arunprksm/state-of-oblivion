@@ -32,6 +32,7 @@ public class SceneController : MonoBehaviour
     
     public void Resume()
     {
+        SoundManager.Instance.PlaySFX(Sounds.ButtonClick);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         pauseMenuPanel.SetActive(false);
@@ -41,6 +42,7 @@ public class SceneController : MonoBehaviour
 
     private void Pause()
     {
+        SoundManager.Instance.PlaySFX(Sounds.ButtonClick);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         pauseMenuPanel.SetActive(true);
@@ -60,6 +62,7 @@ public class SceneController : MonoBehaviour
 
     public void MainMenuScene()
     {
+        SoundManager.Instance.PlaySFX(Sounds.ButtonClick);
         SceneManager.LoadScene(0);
         Time.timeScale = 1f;
         IsGamePaused = false;
@@ -67,6 +70,7 @@ public class SceneController : MonoBehaviour
 
     public void ReloadScene()
     {
+        SoundManager.Instance.PlaySFX(Sounds.ButtonClick);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1f;
         IsGamePaused = false;
