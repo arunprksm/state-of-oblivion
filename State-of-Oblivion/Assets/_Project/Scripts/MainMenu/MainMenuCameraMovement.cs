@@ -7,10 +7,11 @@ using UnityEngine.SceneManagement;
 public class MainMenuCameraMovement : MonoBehaviour
 {
     [SerializeField] private float mainCameraSpeed;
-
+    [SerializeField] private GameObject optionMenu;
     private void Start()
     {
         SoundManager.Instance.PlayMusic(Sounds.Music);
+        optionMenu.SetActive(false);
     }
     private void Update()
     {
@@ -20,5 +21,18 @@ public class MainMenuCameraMovement : MonoBehaviour
     {
         SoundManager.Instance.PlaySFX(Sounds.ButtonClick);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void OptionButton()
+    {
+        SoundManager.Instance.PlaySFX(Sounds.ButtonClick);
+        if (optionMenu.activeSelf)
+        {
+            optionMenu.SetActive(false);
+        }
+        else
+        {
+            optionMenu.SetActive(true);
+        }
     }
 }

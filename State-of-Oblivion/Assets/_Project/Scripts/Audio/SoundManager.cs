@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class SoundManager : MonoBehaviour
 {
@@ -12,9 +14,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource SFX;
     [SerializeField] private AudioSource MusicPlay;
 
-    [Range(0f, 1f)] [SerializeField] private float musicVolume = 0.5f;
-
-    [Range(0f, 1f)] [SerializeField] private float sfxVolume = 0.5f;
+    [SerializeField] private Slider musicVolume;
+    [SerializeField] private Slider sfxVolume;
 
     [SerializeField] private SoundType[] Sounds;
 
@@ -34,12 +35,14 @@ public class SoundManager : MonoBehaviour
     private void Start()
     {
         //PlayMusic(global::Sounds.Music);
-        
+        musicVolume.value = 0.5f;
+        sfxVolume.value = 0.5f;
+
     }
     private void Update()
     {
-        MusicPlay.volume = musicVolume;
-        SFX.volume = sfxVolume;
+        MusicPlay.volume = musicVolume.value;
+        SFX.volume = sfxVolume.value;
     }
 
     public void PlayMusic(Sounds sound)
