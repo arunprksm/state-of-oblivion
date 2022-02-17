@@ -11,11 +11,11 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance { get { return instance; } }
 
 
-    [SerializeField] private AudioSource SFX;
-    [SerializeField] private AudioSource MusicPlay;
+    [SerializeField] internal AudioSource SFX;
+    [SerializeField] internal AudioSource MusicPlay;
 
-    [SerializeField] private Slider musicVolume;
-    [SerializeField] private Slider sfxVolume;
+    [SerializeField] internal Slider musicVolume;
+    [SerializeField] internal Slider sfxVolume;
 
     [SerializeField] private SoundType[] Sounds;
 

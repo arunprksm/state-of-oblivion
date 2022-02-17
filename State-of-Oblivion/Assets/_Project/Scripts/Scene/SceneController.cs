@@ -2,18 +2,44 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
     public static bool IsGamePaused = false;
+
     [SerializeField] private GameObject pauseMenuPanel;
+    [SerializeField] private GameObject optionMenu;
+
+
+    [SerializeField] internal Slider SceneMusicVolume;
+    [SerializeField] internal Slider SceneSfxVolume;
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         pauseMenuPanel.SetActive(false);
+        optionMenu.SetActive(false);
+        SetVolume();
+
+        //SceneMusicVolume.value = SoundManager.Instance.musicVolume.value;
+        //Debug.Log(SoundManager.Instance.musicVolume.value);
+        //SceneSfxVolume.value = SoundManager.Instance.sfxVolume.value;
+    }
+    private void SetVolume()
+    {
+        SceneMusicVolume.value = SoundManager.Instance.musicVolume.value;
+        //Debug.Log(SoundManager.Instance.musicVolume.value);
+        SceneSfxVolume.value = SoundManager.Instance.sfxVolume.value;
+
+    }
+    private void VolumeControl()
+    {
+        SoundManager.Instance.MusicPlay.volume = SceneMusicVolume.value;
+        SoundManager.Instance.SFX.volume = SceneSfxVolume.value;
     }
     private void Update()
     {
@@ -28,6 +54,7 @@ public class SceneController : MonoBehaviour
                 Pause();
             }
         }
+        VolumeControl();
     }
     
     public void Resume()
@@ -50,7 +77,18 @@ public class SceneController : MonoBehaviour
         IsGamePaused = true;
     }
 
-
+    public void OptionButton()
+    {
+        SoundManager.Instance.PlaySFX(Sounds.ButtonClick);
+        if (optionMenu.activeSelf)
+        {
+            optionMenu.SetActive(false);
+        }
+        else
+        {
+            optionMenu.SetActive(true);
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -74,6 +112,9 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1f;
         IsGamePaused = false;
+        SceneMusicVolume.value = 0.5f;
+        SceneSfxVolume.value = 0.5f;
+        SetVolume();
     }
 
     public IEnumerator NextScene()
