@@ -8,9 +8,16 @@ public class MainMenuCameraMovement : MonoBehaviour
 {
     [SerializeField] private float mainCameraSpeed;
     [SerializeField] private GameObject optionMenu;
+    private SoundManager soundManager;
+    //[SerializeField] internal GameObject playMenu;
     private void Start()
     {
-        SoundManager.Instance.PlayMusic(Sounds.Music);
+        soundManager = SoundManager.Instance;
+        soundManager.PlayMusic(Sounds.Music);
+        //SoundManager.Instance.PlayMusic(Sounds.Music);
+
+        //optionMenu = GameObject.FindGameObjectWithTag("OptionMenu");
+        optionMenu = SoundManager.Instance.optionMenu;
         optionMenu.SetActive(false);
     }
     private void Update()
@@ -19,6 +26,8 @@ public class MainMenuCameraMovement : MonoBehaviour
     }
     public void PlayButton()
     {
+        //playMenu.SetActive(false);
+        optionMenu.SetActive(false);
         SoundManager.Instance.PlaySFX(Sounds.ButtonClick);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }

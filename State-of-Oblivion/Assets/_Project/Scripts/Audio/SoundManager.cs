@@ -9,7 +9,7 @@ public class SoundManager : MonoBehaviour
 {
     private static SoundManager instance;
     public static SoundManager Instance { get { return instance; } }
-
+    public GameObject optionMenu;
 
     [SerializeField] internal AudioSource SFX;
     [SerializeField] internal AudioSource MusicPlay;
@@ -25,24 +25,44 @@ public class SoundManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            //musicSlider = GameObject.FindGameObjectWithTag("MusicSlider");
+            //sfxSlider = GameObject.FindGameObjectWithTag("SFXSlider");
         }
         else
         {
             Destroy(gameObject);
         }
     }
-
     private void Start()
     {
-        //PlayMusic(global::Sounds.Music);
-        musicVolume.value = 0.5f;
-        sfxVolume.value = 0.5f;
-
+        CurrentVolume();
     }
-    private void Update()
+    private void CurrentVolume()
+    {
+        musicVolume.value = GameManager.Instance.currentMusicVolume;
+        sfxVolume.value = GameManager.Instance.currentSfxVolume;
+        //musicSlider.GetComponent<Slider>().value = GameManager.Instance.musicVolume;
+        //sfxSlider.GetComponent<Slider>().value = GameManager.Instance.sfxVolume;
+    }
+    private void SetVolume()
+    {
+        GameManager.Instance.currentMusicVolume = musicVolume.value;
+        GameManager.Instance.currentSfxVolume = sfxVolume.value;
+        //GameManager.Instance.currentMusicVolume = musicSlider.GetComponent<Slider>().value;
+        //GameManager.Instance.currentSfxVolume = sfxSlider.GetComponent<Slider>().value;
+    }
+    private void VolumeControl()
     {
         MusicPlay.volume = musicVolume.value;
         SFX.volume = sfxVolume.value;
+        //MusicPlay.volume = musicSlider.GetComponent<Slider>().value;
+        //SFX.volume = sfxSlider.GetComponent<Slider>().value;
+    }
+
+    private void Update()
+    {
+        VolumeControl();
+        SetVolume();
     }
 
     public void PlayMusic(Sounds sound)
@@ -58,7 +78,19 @@ public class SoundManager : MonoBehaviour
             Debug.LogError("Clip not found on soundType: " + sound);
         }
     }
-   
+    public void PauseMusic(Sounds sound)
+    {
+        AudioClip clip = getSoundClip(sound);
+        if (clip != null)
+        {
+            MusicPlay.clip = clip;
+            MusicPlay.Pause();
+        }
+        else
+        {
+            Debug.LogError("Clip not found on soundType: " + sound);
+        }
+    }
     public void PlaySFX(Sounds sound)
     {
         AudioClip clip = getSoundClip(sound);

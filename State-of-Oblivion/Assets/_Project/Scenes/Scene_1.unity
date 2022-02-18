@@ -1578,7 +1578,7 @@ GameObject:
   - component: {fileID: 466618780}
   m_Layer: 5
   m_Name: Slider_Music
-  m_TagString: Untagged
+  m_TagString: MusicSlider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5360,7 +5360,7 @@ GameObject:
   - component: {fileID: 1922864852}
   m_Layer: 5
   m_Name: Slider_SFX
-  m_TagString: Untagged
+  m_TagString: SFXSlider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

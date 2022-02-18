@@ -13,7 +13,6 @@ public class SceneController : MonoBehaviour
     [SerializeField] private GameObject pauseMenuPanel;
     [SerializeField] private GameObject optionMenu;
 
-
     [SerializeField] internal Slider SceneMusicVolume;
     [SerializeField] internal Slider SceneSfxVolume;
 
@@ -23,18 +22,17 @@ public class SceneController : MonoBehaviour
         Cursor.visible = false;
         pauseMenuPanel.SetActive(false);
         optionMenu.SetActive(false);
-        SetVolume();
-
-        //SceneMusicVolume.value = SoundManager.Instance.musicVolume.value;
-        //Debug.Log(SoundManager.Instance.musicVolume.value);
-        //SceneSfxVolume.value = SoundManager.Instance.sfxVolume.value;
+        CurrentVolume();
+    }
+    private void CurrentVolume()
+    {
+        SceneMusicVolume.value = GameManager.Instance.currentMusicVolume;
+        SceneSfxVolume.value = GameManager.Instance.currentSfxVolume;
     }
     private void SetVolume()
     {
-        SceneMusicVolume.value = SoundManager.Instance.musicVolume.value;
-        //Debug.Log(SoundManager.Instance.musicVolume.value);
-        SceneSfxVolume.value = SoundManager.Instance.sfxVolume.value;
-
+        GameManager.Instance.currentMusicVolume = SceneMusicVolume.value;
+        GameManager.Instance.currentSfxVolume = SceneSfxVolume.value;
     }
     private void VolumeControl()
     {
@@ -55,10 +53,12 @@ public class SceneController : MonoBehaviour
             }
         }
         VolumeControl();
+        SetVolume();
     }
     
     public void Resume()
     {
+        SoundManager.Instance.PlayMusic(Sounds.GameMusic_scene1);
         SoundManager.Instance.PlaySFX(Sounds.ButtonClick);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -69,6 +69,7 @@ public class SceneController : MonoBehaviour
 
     private void Pause()
     {
+        SoundManager.Instance.PauseMusic(Sounds.GameMusic_scene1);
         SoundManager.Instance.PlaySFX(Sounds.ButtonClick);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -102,6 +103,7 @@ public class SceneController : MonoBehaviour
     {
         SoundManager.Instance.PlaySFX(Sounds.ButtonClick);
         SceneManager.LoadScene(0);
+        //mainMenuCameraMovement.playMenu.SetActive(true);
         Time.timeScale = 1f;
         IsGamePaused = false;
     }
@@ -112,9 +114,6 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1f;
         IsGamePaused = false;
-        SceneMusicVolume.value = 0.5f;
-        SceneSfxVolume.value = 0.5f;
-        SetVolume();
     }
 
     public IEnumerator NextScene()
