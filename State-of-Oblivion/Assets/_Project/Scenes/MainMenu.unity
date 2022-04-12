@@ -887,6 +887,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 376771189}
   m_CullTransparentMesh: 1
+--- !u!82 &432956527 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 2985589497690511502, guid: 11051b6210951004a9ba2d05f55f50d9, type: 3}
+  m_PrefabInstance: {fileID: 2985589497226072018}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &509193074
 GameObject:
   m_ObjectHideFlags: 0
@@ -3811,6 +3816,11 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!82 &1781873343 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 2985589496515612171, guid: 11051b6210951004a9ba2d05f55f50d9, type: 3}
+  m_PrefabInstance: {fileID: 2985589497226072018}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1785569738
 GameObject:
   m_ObjectHideFlags: 0
@@ -4137,6 +4147,14 @@ PrefabInstance:
       value: AudioManager
       objectReference: {fileID: 0}
     - target: {fileID: 2985589496088564677, guid: 11051b6210951004a9ba2d05f55f50d9, type: 3}
+      propertyPath: SFX
+      value: 
+      objectReference: {fileID: 1781873343}
+    - target: {fileID: 2985589496088564677, guid: 11051b6210951004a9ba2d05f55f50d9, type: 3}
+      propertyPath: MusicPlay
+      value: 
+      objectReference: {fileID: 432956527}
+    - target: {fileID: 2985589496088564677, guid: 11051b6210951004a9ba2d05f55f50d9, type: 3}
       propertyPath: sfxVolume
       value: 
       objectReference: {fileID: 926030766}
@@ -4151,7 +4169,7 @@ PrefabInstance:
     - target: {fileID: 2985589496088564677, guid: 11051b6210951004a9ba2d05f55f50d9, type: 3}
       propertyPath: Sounds.Array.data[0].audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: ecb966bf68d835f4cb8ded2c2c23797d, type: 3}
+      objectReference: {fileID: 8300000, guid: ac93b7b6d13b5304ea367328d741dd70, type: 3}
     - target: {fileID: 2985589496088564682, guid: 11051b6210951004a9ba2d05f55f50d9, type: 3}
       propertyPath: m_RootOrder
       value: 2

@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,11 +9,12 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance { get { return instance; } }
     public GameObject optionMenu;
 
-    [SerializeField] internal AudioSource SFX;
     [SerializeField] internal AudioSource MusicPlay;
+    [SerializeField] internal AudioSource SFX;
 
     [SerializeField] internal Slider musicVolume;
     [SerializeField] internal Slider sfxVolume;
+    
 
     [SerializeField] private SoundType[] Sounds;
 
@@ -25,8 +24,6 @@ public class SoundManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            //musicSlider = GameObject.FindGameObjectWithTag("MusicSlider");
-            //sfxSlider = GameObject.FindGameObjectWithTag("SFXSlider");
         }
         else
         {

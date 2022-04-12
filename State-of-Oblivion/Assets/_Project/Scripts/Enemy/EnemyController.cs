@@ -29,20 +29,7 @@ public class EnemyController : MonoBehaviour
     public bool IsFacingLeft { get; set; }
     [SerializeField] private EnemyHealthController enemyHealthController;
     [SerializeField] private ScoreController scoreController;
-    public static EnemyController instance;
-    public static EnemyController Instance { get { return instance; } }
 
-    //private void Awake()
-    //{
-    //    if (instance != null)
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //    else
-    //    {
-    //        instance = this;
-    //    }
-    //}
     private void Start()
     {
         InitializeComponents();
