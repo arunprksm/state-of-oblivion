@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -26,13 +24,13 @@ public class PlayerMovementControl : MonoBehaviour
 
     [SerializeField] private int playerAttackValue = 20;
 
-    private bool jump, attack;
-    private bool isGrounded;
+    private bool jump, attack, isGrounded;
 
     private Rigidbody2D rb2D;
     private Animator animator;
     private float move;
 
+    //SingleTon Class
     internal static PlayerMovementControl instance;
     internal static PlayerMovementControl Instance { get { return instance; } }
 
@@ -190,13 +188,15 @@ public class PlayerMovementControl : MonoBehaviour
     {
         //AudioManager.Instance.PlayMusic("PlayerDeath");
         //FindObjectOfType<AudioManager>().PlayMusic("PlayerDeath");
+
         SoundManager.Instance.PlaySFX(Sounds.PlayerDeath);
+        SoundManager.Instance.PauseMusic(Sounds.GameMusic_scene1);
         animator.SetBool("Die", true);
         yield return new WaitForSecondsRealtime(2);
         Debug.Log("Player Died");
         gameObject.SetActive(false);
     }
-    internal void PlayerWin()
+    public void PlayerWin()
     {
         Debug.Log("Player Win");
     }

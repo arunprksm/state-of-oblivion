@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - DieLimit
+  - MusicSlider
+  - SFXSlider
+  - OptionMenu
   layers:
   - Default
   - TransparentFX

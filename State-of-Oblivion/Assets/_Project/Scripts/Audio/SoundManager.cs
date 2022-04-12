@@ -1,20 +1,20 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class SoundManager : MonoBehaviour
 {
     private static SoundManager instance;
     public static SoundManager Instance { get { return instance; } }
+    public GameObject optionMenu;
 
+    [SerializeField] internal AudioSource MusicPlay;
+    [SerializeField] internal AudioSource SFX;
 
-    [SerializeField] private AudioSource SFX;
-    [SerializeField] private AudioSource MusicPlay;
-
-    [Range(0f, 1f)] [SerializeField] private float musicVolume = 0.5f;
-
-    [Range(0f, 1f)] [SerializeField] private float sfxVolume = 0.5f;
+    [SerializeField] internal Slider musicVolume;
+    [SerializeField] internal Slider sfxVolume;
+    
 
     [SerializeField] private SoundType[] Sounds;
 
@@ -30,16 +30,36 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     private void Start()
     {
-        //PlayMusic(global::Sounds.Music);
-        
+        CurrentVolume();
     }
+    private void CurrentVolume()
+    {
+        musicVolume.value = GameManager.Instance.currentMusicVolume;
+        sfxVolume.value = GameManager.Instance.currentSfxVolume;
+        //musicSlider.GetComponent<Slider>().value = GameManager.Instance.musicVolume;
+        //sfxSlider.GetComponent<Slider>().value = GameManager.Instance.sfxVolume;
+    }
+    private void SetVolume()
+    {
+        GameManager.Instance.currentMusicVolume = musicVolume.value;
+        GameManager.Instance.currentSfxVolume = sfxVolume.value;
+        //GameManager.Instance.currentMusicVolume = musicSlider.GetComponent<Slider>().value;
+        //GameManager.Instance.currentSfxVolume = sfxSlider.GetComponent<Slider>().value;
+    }
+    private void VolumeControl()
+    {
+        MusicPlay.volume = musicVolume.value;
+        SFX.volume = sfxVolume.value;
+        //MusicPlay.volume = musicSlider.GetComponent<Slider>().value;
+        //SFX.volume = sfxSlider.GetComponent<Slider>().value;
+    }
+
     private void Update()
     {
-        MusicPlay.volume = musicVolume;
-        SFX.volume = sfxVolume;
+        VolumeControl();
+        SetVolume();
     }
 
     public void PlayMusic(Sounds sound)
@@ -55,7 +75,19 @@ public class SoundManager : MonoBehaviour
             Debug.LogError("Clip not found on soundType: " + sound);
         }
     }
-   
+    public void PauseMusic(Sounds sound)
+    {
+        AudioClip clip = getSoundClip(sound);
+        if (clip != null)
+        {
+            MusicPlay.clip = clip;
+            MusicPlay.Pause();
+        }
+        else
+        {
+            Debug.LogError("Clip not found on soundType: " + sound);
+        }
+    }
     public void PlaySFX(Sounds sound)
     {
         AudioClip clip = getSoundClip(sound);

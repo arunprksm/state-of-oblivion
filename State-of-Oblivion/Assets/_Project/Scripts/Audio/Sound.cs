@@ -5,7 +5,6 @@ using UnityEngine.Audio;
 [Serializable]
 public class Sound
 {
-
     public string name;
     [SerializeField] internal AudioClip audioClip;
     [Range(0f, 1f)]
