@@ -1,4 +1,5 @@
 using System.Collections;
+using System.IO.IsolatedStorage;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -25,11 +26,14 @@ public class PlayerMovementControl : MonoBehaviour
     [SerializeField] private int playerAttackValue = 20;
 
     private bool jump, attack, isGrounded;
+    public bool isdead;
+
+    [SerializeField] AudioClip[] audioClip;
 
     private Rigidbody2D rb2D;
     private Animator animator;
     private float move;
-
+    [SerializeField] private SceneController sceneController;
     //SingleTon Class
     internal static PlayerMovementControl instance;
     internal static PlayerMovementControl Instance { get { return instance; } }
@@ -53,17 +57,19 @@ public class PlayerMovementControl : MonoBehaviour
 
     private void InitializeComponenet()
     {
-        
+        isdead = false;
         rb2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         playerCurrentHealth = playerMaxHealth;
         PlayerHealthController.Instance.SetMaxHealth(playerMaxHealth);
-        SoundManager.Instance.PlayMusic(Sounds.GameMusic_scene1);
+        //SoundManager.Instance.PlayMusic(Sounds.GameMusic_scene1);
+        SoundManager.Instance.PlayMusic(sceneController.CheckGameScene());
+        //SceneController.Instance.CheckGameScene();
     }
     private void Update()
     {
 
-        if (SceneController.IsGamePaused) //guard class
+        if (SceneController.IsGamePaused || isdead) //guard class
         {
             return;
         }
@@ -83,6 +89,11 @@ public class PlayerMovementControl : MonoBehaviour
 
     private void PlayerMovement()
     {
+        if (isdead) //guard class
+        {
+            rb2D.velocity = new Vector2(0, rb2D.velocity.y);
+            return;
+        }
         //bool isGrounded = Collision.
         rb2D.velocity = new Vector2(move * moveSpeed, rb2D.velocity.y);
         animator.SetFloat("Blend", Mathf.Abs(move));
@@ -109,8 +120,9 @@ public class PlayerMovementControl : MonoBehaviour
         //{
         //    return;
         //}
-        if (isGrounded == true && jump)
+        if (isGrounded && jump)
         {
+            SoundManager.Instance.PlaySFX(Sounds.playerJump);
             rb2D.velocity = new Vector2(rb2D.velocity.x, jumpValue);
             animator.SetTrigger("Jump");
         }
@@ -120,11 +132,9 @@ public class PlayerMovementControl : MonoBehaviour
         if (!isGrounded)
         {
             animator.SetBool("Fall", true);
+            return;
         }
-        else
-        {
-            animator.SetBool("Fall", false);
-        }
+        animator.SetBool("Fall", false);
     }
 
     private void PlayerAttack()
@@ -133,11 +143,12 @@ public class PlayerMovementControl : MonoBehaviour
 
         if (isGrounded && attack)
         {
+            SoundManager.Instance.PlaySFX(Sounds.PlayerAttack);
             animator.SetTrigger("Attack");
             animator.SetBool("JumpAttack", false);
             hitEnemies = Physics2D.OverlapCircleAll(attackPosition.position, attackRange, playerAttackableLayers);
         }
-        else if (isGrounded == false && attack)
+        else if (isGrounded && attack)
         {
             animator.SetBool("JumpAttack", true);
             hitEnemies = Physics2D.OverlapCircleAll(attackPosition.position, attackRange, playerAttackableLayers);
@@ -150,11 +161,13 @@ public class PlayerMovementControl : MonoBehaviour
 
         foreach (Collider2D enemy in hitEnemies)
         {
-            //Debug.Log("we Hit" + enemy.name);
             enemy.GetComponent<EnemyController>().EnemyTakeDamage(playerAttackValue);
         }
     }
-
+    public void PlayerWalkSound()
+    {
+        SoundManager.Instance.PlaySFX(Sounds.PlayerMove);
+    }
     private void OnDrawGizmosSelected()
     {
         if (attackPosition == null)
@@ -169,11 +182,9 @@ public class PlayerMovementControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("DieLimit"))
         {
-            //FindObjectOfType<AudioManager>().PlayAudio("PlayerDeath");
             StartCoroutine(PlayerDie());
         }
     }
-
     internal void PlayerTakeDamage(int damage)
     {
         playerCurrentHealth -= damage;
@@ -186,18 +197,20 @@ public class PlayerMovementControl : MonoBehaviour
     }
     private IEnumerator PlayerDie()
     {
-        //AudioManager.Instance.PlayMusic("PlayerDeath");
-        //FindObjectOfType<AudioManager>().PlayMusic("PlayerDeath");
-
+        SoundManager.Instance.PauseMusic(sceneController.CheckGameScene());
         SoundManager.Instance.PlaySFX(Sounds.PlayerDeath);
-        SoundManager.Instance.PauseMusic(Sounds.GameMusic_scene1);
+        //SoundManager.Instance.PauseMusic(Sounds.GameMusic_scene1);
         animator.SetBool("Die", true);
+        isdead = true;
+
         yield return new WaitForSecondsRealtime(2);
-        Debug.Log("Player Died");
+        //Debug.Log("Player Died");
         gameObject.SetActive(false);
+        sceneController.Pause();
+
     }
     public void PlayerWin()
     {
-        Debug.Log("Player Win");
+        //Debug.Log("Player Win");
     }
 }

@@ -45,15 +45,11 @@ public class SoundManager : MonoBehaviour
     {
         GameManager.Instance.currentMusicVolume = musicVolume.value;
         GameManager.Instance.currentSfxVolume = sfxVolume.value;
-        //GameManager.Instance.currentMusicVolume = musicSlider.GetComponent<Slider>().value;
-        //GameManager.Instance.currentSfxVolume = sfxSlider.GetComponent<Slider>().value;
     }
     private void VolumeControl()
     {
         MusicPlay.volume = musicVolume.value;
         SFX.volume = sfxVolume.value;
-        //MusicPlay.volume = musicSlider.GetComponent<Slider>().value;
-        //SFX.volume = sfxSlider.GetComponent<Slider>().value;
     }
 
     private void Update()
@@ -132,11 +128,16 @@ public class SoundType
 
 public enum Sounds
 {
+    None,
     ButtonClick,
     LevelSelection,
     Music,
     PlayerMove,
+    PlayerAttack,
+    playerJump,
     PlayerDeath,
     EnemyDeath,
     GameMusic_scene1,
+    GameMusic_scene2,
+    GameMusic_scene3,
 }

@@ -13,6 +13,10 @@ public class SceneController : MonoBehaviour
 
     [SerializeField] internal Slider SceneMusicVolume;
     [SerializeField] internal Slider SceneSfxVolume;
+    [SerializeField] private PlayerMovementControl playerMovementControl;
+
+    private static SceneController instance;
+    public static SceneController Instance { get { return instance; } }
 
     private void Start()
     {
@@ -56,7 +60,13 @@ public class SceneController : MonoBehaviour
     
     public void Resume()
     {
-        SoundManager.Instance.PlayMusic(Sounds.GameMusic_scene1);
+        if (playerMovementControl.isdead)
+        {
+            ReloadScene();
+        }
+        //SoundManager.Instance.PlayMusic(Sounds.GameMusic_scene1);
+        SoundManager.Instance.PlayMusic(CheckGameScene());
+        
         SoundManager.Instance.PlaySFX(Sounds.ButtonClick);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -65,9 +75,10 @@ public class SceneController : MonoBehaviour
         IsGamePaused = false;
     }
 
-    private void Pause()
+    public void Pause()
     {
-        SoundManager.Instance.PauseMusic(Sounds.GameMusic_scene1);
+        //SoundManager.Instance.PauseMusic(Sounds.GameMusic_scene1);
+        SoundManager.Instance.PauseMusic(CheckGameScene());
         SoundManager.Instance.PlaySFX(Sounds.ButtonClick);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -91,7 +102,7 @@ public class SceneController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<PlayerMovementControl>() != null)
+        if (collision.gameObject == playerMovementControl.GetComponent<PlayerMovementControl>().gameObject)
         {
             StartCoroutine(NextScene());
         }
@@ -101,7 +112,6 @@ public class SceneController : MonoBehaviour
     {
         SoundManager.Instance.PlaySFX(Sounds.ButtonClick);
         SceneManager.LoadScene(0);
-        //mainMenuCameraMovement.playMenu.SetActive(true);
         Time.timeScale = 1f;
         IsGamePaused = false;
     }
@@ -116,8 +126,27 @@ public class SceneController : MonoBehaviour
 
     public IEnumerator NextScene()
     {
-        PlayerMovementControl.Instance.PlayerWin();
-        yield return new WaitForSecondsRealtime(5);
+        //PlayerMovementControl.Instance.PlayerWin();
+        yield return new WaitForSecondsRealtime(1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        CheckGameScene();
+    }
+
+    public Sounds CheckGameScene()
+    {
+        Sounds s;
+        switch (SceneManager.GetActiveScene().buildIndex)
+        {
+            case 1: s = Sounds.GameMusic_scene1;
+                break;
+            case 2: s = Sounds.GameMusic_scene2;
+                break;
+            case 3: s = Sounds.GameMusic_scene3;
+                break;
+            default:
+                s = Sounds.Music;
+                break;
+        }
+        return s;
     }
 }

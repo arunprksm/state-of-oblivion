@@ -10,6 +10,8 @@ public class MainMenuCameraMovement : MonoBehaviour
     [SerializeField] private GameObject optionMenu;
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         SoundManager.Instance.PlayMusic(Sounds.Music);
         optionMenu = SoundManager.Instance.optionMenu;
         optionMenu.SetActive(false);

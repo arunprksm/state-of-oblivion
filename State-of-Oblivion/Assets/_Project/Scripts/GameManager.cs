@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
             musicVolume = 0.5f;
-            sfxVolume = 0.2f;
+            sfxVolume = 0.8f;
             currentMusicVolume = musicVolume;
             currentSfxVolume = sfxVolume;
         }
